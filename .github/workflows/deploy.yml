@@ -5,6 +5,10 @@ on:
     branches:
       - main
 
+env:
+  VITE_API_KEY: ${{ secrets.VITE_API_KEY }}
+  VITE_APP_API_HOST: ${{ secrets.VITE_APP_API_HOST }}
+
 jobs:
   build:
     name: Build
