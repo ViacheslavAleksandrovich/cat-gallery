@@ -1,17 +1,16 @@
-// src/components/CatGallery.tsx
 import { useState } from "react";
 import { useCats } from "../hooks/useCats";
 import { useFavorites } from "../hooks/useFavorites";
 import { Cat } from "../types/cat";
-import { BreedFilter } from "./BreedFilter";
-import { FaHeart, FaRegHeart } from "react-icons/fa";
+import { BreedFilter } from "../Components/BreedFilter";
+import { CatCard } from "../Components/CatCard/CatCard";
 
 export const CatGallery = () => {
   const [page, setPage] = useState(1);
   const [selectedBreed, setSelectedBreed] = useState("");
   const [showOnlyFavorites, setShowOnlyFavorites] = useState(false);
   const { data: cats, isLoading, isError, error } = useCats(page, selectedBreed);
-  const { favorites, toggleFavorite, isFavorite } = useFavorites();
+  const { toggleFavorite, isFavorite } = useFavorites();
 
   const handleBreedChange = (breedId: string) => {
     setSelectedBreed(breedId);
@@ -56,33 +55,12 @@ export const CatGallery = () => {
 
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
         {filteredCats?.map((cat: Cat) => (
-          <div
+          <CatCard
             key={cat.id}
-            className="bg-white rounded-xl overflow-hidden shadow-lg transition-transform duration-300 hover:scale-105 relative">
-            <div className="relative pb-[66.67%]">
-              <img
-                src={cat.url}
-                alt={cat.breeds[0]?.name || "Cat"}
-                className="absolute top-0 left-0 w-full h-full object-cover"
-                loading="lazy"
-              />
-              <button
-                onClick={() => toggleFavorite(cat.id)}
-                className="absolute top-2 right-2 text-2xl">
-                {isFavorite(cat.id) ? (
-                  <FaHeart className="text-red-500" />
-                ) : (
-                  <FaRegHeart className="text-white" />
-                )}
-              </button>
-            </div>
-            <div className="p-4">
-              <h2 className="text-xl font-semibold text-gray-800 mb-2">
-                {cat.breeds[0]?.name || "Unknown breed"}
-              </h2>
-              <p className="text-sm text-gray-600">ID: {cat.id.slice(0, 8)}...</p>
-            </div>
-          </div>
+            cat={cat}
+            isFavorite={isFavorite(cat.id)}
+            onToggleFavorite={toggleFavorite}
+          />
         ))}
       </div>
 

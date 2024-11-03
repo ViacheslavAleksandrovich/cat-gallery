@@ -1,4 +1,3 @@
-// src/components/BreedFilter.tsx
 import { useBreeds } from "../hooks/useBreeds";
 
 interface BreedFilterProps {

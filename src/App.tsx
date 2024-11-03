@@ -1,5 +1,5 @@
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { CatGallery } from "./Components/CatGallery";
+import { CatGallery } from "./Pages/CatGallery";
 
 const queryClient = new QueryClient();
 
